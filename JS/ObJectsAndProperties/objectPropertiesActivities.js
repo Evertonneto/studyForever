@@ -6,8 +6,11 @@ const student = {
 }
 
 console.log(student.name)
+console.log(student['name'])
 console.log(student.grades)
+console.log(student['grades'])
 console.log(student.school)
+console.log(student['school'])
 
 //activity 2
 
@@ -36,6 +39,9 @@ function createPhone(brand,model,price){
         price
     }
 }
+
+const iPhone = createPhone('Apple','iPhone 13',2500)
+console.log(iPhone)
 
 //activity 5 e 6
 function BankAccount(holder,balance){
@@ -129,7 +135,7 @@ function Employee(name,role,salary,ssn){
             configurable:true
         },
         ssn:{
-            enumerable:false,
+            enumerable:true,
             value:ssn,
             writable:false,
             configurable:false
@@ -144,3 +150,4 @@ delete emp1.role
 delete emp1.salary
 delete emp1.ssn
 console.log(Object.keys(emp1))
+console.log(emp1)
