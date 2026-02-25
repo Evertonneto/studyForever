@@ -1,6 +1,6 @@
 /**
  * EXERCÍCIOS DE GETTERS E SETTERS - SITUAÇÕES REAIS DE TRABALHO
- * 
+ *
  * Resolva os exercícios abaixo implementando getters e setters
  * com validações apropriadas para cada cenário.
  */
@@ -18,63 +18,60 @@
  */
 
 // Sua solução aqui:
-const User = function(email) {
-    let emailPrivate = email
-    let passwordPrivate;
-    let isActive;
+const User = function (email) {
+  let emailPrivate = email;
+  let passwordPrivate;
+  let isActive;
 
-    Object.defineProperties(this,{
-        email:{
-            enumerable:false,
-            configurable:true,
-            get: ()=> {
-                return emailPrivate
-            },
-            set: (value)=> {
-                if(!value.includes('@') || !value.includes('.')){
-                    console.log('O email deve conter @ e . !')
-                    return
-                }
-                emailPrivate = value
-                    
-            }
-        },
-        password:{
-            enumerable: false,
-            configurable:false,
-            set: (value)=>{
-                if(value.length < 6){
-                    console.log('A senha deve conter no mínimo 6 caracteres')
-                    return
-                }
-                passwordPrivate = value
-            }
+  Object.defineProperties(this, {
+    email: {
+      enumerable: false,
+      configurable: true,
+      get: () => {
+        return emailPrivate;
+      },
+      set: (value) => {
+        if (!value.includes("@") || !value.includes(".")) {
+          console.log("O email deve conter @ e . !");
+          return;
         }
-        ,
-        isActive:{
-            enumerable:true,
-            configurable:true,
-            get: ()=>{
-                if(typeof isActive !== 'boolean'){
-                    console.log("isActive doesn't exists")
-                }else{
-                    return isActive
-                }
-            },
-            set: (value)=>{
-                if(typeof value !== 'boolean'){
-                    console.log('O valor deve ser do tipo boolean!')
-                    return
-                }
-                isActive = value
-
-            }
+        emailPrivate = value;
+      },
+    },
+    password: {
+      enumerable: false,
+      configurable: false,
+      set: (value) => {
+        if (value.length < 6) {
+          console.log("A senha deve conter no mínimo 6 caracteres");
+          return;
         }
-    })
-}
+        passwordPrivate = value;
+      },
+    },
+    isActive: {
+      enumerable: true,
+      configurable: true,
+      get: () => {
+        if (typeof isActive !== "boolean") {
+          console.log("isActive doesn't exists");
+        } else {
+          return isActive;
+        }
+      },
+      set: (value) => {
+        if (typeof value !== "boolean") {
+          console.log("O valor deve ser do tipo boolean!");
+          return;
+        }
+        isActive = value;
+      },
+    },
+  });
+};
 
 // Teste seu código:
-const user1 = new User('joao@email.com')
+const user1 = new User("joao@email.com");
 // console.log(user1.email)
 // user1.email = 'novoemail@test.com'
 // user1.email = 'novoemailtest.com'
@@ -83,7 +80,6 @@ const user1 = new User('joao@email.com')
 // user1.password = '12345'
 // console.log(user1.email)
 // console.log(user1.isActive)
-
 
 // ============================================================
 // EXERCÍCIO 2: Carrinho de Compras
@@ -99,73 +95,69 @@ const user1 = new User('joao@email.com')
  */
 
 // Sua solução aqui:
-const ShoppingCart = function(){
-    let items = [];
-    Object.defineProperties(this,{
-        items:{
-            enumerable:true,
-            configurable:false,
-            get:()=>{
-                let itemsCopy = [...items]
-                return itemsCopy
-            }
-        },
-        total:{
-            enumerable:true,
-            configurable:false,
-            get: ()=>{
-                let total = 0
-                for(let i = 0; i < items.length;i++){
-                    total += (items[i].price*items[i].quantity)
-                }
-                return total
-            }
-        },
-        itemCount: {
-            enumerable:true,
-            configurable:false,
-            get:()=>{
-                const itemsCount = new Set(items.map(item => item.name))
-                return itemsCount.size
-            }
-        },
-        addItem:{
-            enumerable:false,
-            configurable:false,
-            value: (item)=>{
-                if(item.name && item.price && item.quantity){
-                    items.push(item)
-                    console.log('Inserido com sucesso!')
-                }else{
-                    console.log('Informações faltando!')
-                }
-
-            }
-        },
-        removeItem:{
-            enumerable:false,
-            configurable:false,
-            value: (index)=>{
-                items.splice(index,1)
-                console.log('Removido com sucesso')
-            }
+const ShoppingCart = function () {
+  let items = [];
+  Object.defineProperties(this, {
+    items: {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        let itemsCopy = [...items];
+        return itemsCopy;
+      },
+    },
+    total: {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        let total = 0;
+        for (let i = 0; i < items.length; i++) {
+          total += items[i].price * items[i].quantity;
         }
-
-    })
-
-}
+        return total;
+      },
+    },
+    itemCount: {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        const itemsCount = new Set(items.map((item) => item.name));
+        return itemsCount.size;
+      },
+    },
+    addItem: {
+      enumerable: false,
+      configurable: false,
+      value: (item) => {
+        if (item.name && item.price && item.quantity) {
+          items.push(item);
+          console.log("Inserido com sucesso!");
+        } else {
+          console.log("Informações faltando!");
+        }
+      },
+    },
+    removeItem: {
+      enumerable: false,
+      configurable: false,
+      value: (index) => {
+        items.splice(index, 1);
+        console.log("Removido com sucesso");
+      },
+    },
+  });
+};
 
 // Teste seu código:
-const cart = new ShoppingCart()
-cart.addItem({ name: 'Notebook', price: 2500, quantity: 1 })
-cart.addItem({ name: 'Mouse', price: 50, quantity: 2 })
-cart.addItem({ name: 'Mouse', price: 50, quantity: 2 })
-cart.addItem({ name: 'Mouse', price: 50, quantity: 2 })
-cart.removeItem(0)
-console.log(cart.items) // [{ name: 'Notebook', price: 2500, quantity: 1 }, { name: 'Mouse', price: 50, quantity: 2 }]
-console.log(cart.total) // 2600
-console.log(cart.itemCount) // 2
-
+// const cart = new ShoppingCart()
+// cart.addItem({ name: 'Notebook', price: 2500, quantity: 1 })
+// cart.addItem({ name: 'Mouse', price: 50, quantity: 2 })
+// cart.addItem({ name: 'Mouse', price: 50, quantity: 2 })
+// cart.addItem({ name: 'Mouse', price: 50, quantity: 2 })
+// cart.removeItem(0)
+// console.log(cart.items) // [{ name: 'Notebook', price: 2500, quantity: 1 }, { name: 'Mouse', price: 50, quantity: 2 }]
+// console.log(cart.total) // 2600
+// console.log(cart.itemCount) // 2
 
 // ============================================================
 // EXERCÍCIO 3: Conta Bancária
@@ -183,17 +175,50 @@ console.log(cart.itemCount) // 2
 
 // Sua solução aqui:
 function createBankAccount(accountNumber, initialBalance) {
-    // Implemente aqui
+  let actualBalance = initialBalance;
+
+  return {
+    get balance() {
+      return actualBalance;
+    },
+    set balance(value) {
+      throw new Error("Não é permitido alterar o saldo diretamente!");
+    },
+    deposit(value) {
+      if (typeof value === "number" && value > 0) {
+        actualBalance += value;
+      } else {
+        throw new Error("Valour menor que 0 ou tipo diferente de number");
+      }
+    },
+    withdraw(value) {
+      if (value < 0 || typeof value !== "number") {
+        throw new Error("Valor precisa ser maior que 0 e do tipo numérico!");
+      }
+      if (actualBalance - value < 0) {
+        throw new Error("O valor no saldo não pode ficar abaixo de zero!");
+      } else {
+        actualBalance -= value;
+      }
+    },
+    get accountNumber() {
+      return accountNumber;
+    },
+  };
 }
 
 // Teste seu código:
-// const account = createBankAccount('001-2345', 1000)
+const account = createBankAccount("001-2345", 1000);
 // console.log(account.balance) // 1000
 // account.deposit(500)
 // console.log(account.balance) // 1500
 // account.withdraw(200)
 // console.log(account.balance) // 1300
-
+// try{
+//     account.withdraw(1400)
+// }catch(e){
+//     console.log(e.message) // Error
+// }
 
 // ============================================================
 // EXERCÍCIO 4: Configurações de Aplicação
@@ -209,15 +234,73 @@ function createBankAccount(accountNumber, initialBalance) {
 
 // Sua solução aqui:
 function createAppConfig(theme, language, fontSize) {
-    // Implemente aqui
+  let actualTheme;
+  let actualLanguage;
+  let actualFontSize;
+
+  if (theme === "light" || theme === "dark" || theme === "auto") {
+    actualTheme = theme;
+  } else {
+    throw new Error("O valor do tema deve ser light,dark ou auto");
+  }
+
+  if (language === "pt-BR" || language === "en-US" || language === "es-ES") {
+    actualLanguage = language;
+  } else {
+    throw new Error("O valor da language deve ser pt-BR,en-US ou es-EN");
+  }
+
+  if (fontSize >= 12 && fontSize <= 24) {
+    actualFontSize = fontSize;
+  } else {
+    throw new Error("O valor do fontSize deve ser entre 12 e 24");
+  }
+
+  return {
+    get theme() {
+      return actualTheme;
+    },
+    set theme(newTheme) {
+      if (newTheme === "light" || newTheme === "dark" || newTheme === "auto") {
+        actualTheme = newTheme;
+      }
+    },
+    get language() {
+      return actualLanguage;
+    },
+    set language(newLanguage) {
+      if (
+        newLanguage === "pt-BR" ||
+        newLanguage === "en-US" ||
+        newLanguage === "es-ES"
+      ) {
+        actualLanguage = newLanguage;
+      }
+    },
+    get fontSize() {
+      return actualFontSize;
+    },
+    set fontSize(newFontSize) {
+      if (newFontSize >= 12 && newFontSize <= 24) {
+        actualFontSize = newFontSize;
+      }
+    },
+    get config() {
+      return {
+        theme: actualTheme,
+        language: actualLanguage,
+        fontSize: actualFontSize,
+      };
+    },
+  };
 }
 
 // Teste seu código:
 // const config = createAppConfig('light', 'pt-BR', 16)
+// console.log(config.config)
 // console.log(config.theme)
 // config.theme = 'dark'
 // config.fontSize = 18
-
 
 // ============================================================
 // EXERCÍCIO 5: Produto com Desconto
@@ -234,14 +317,97 @@ function createAppConfig(theme, language, fontSize) {
 
 // Sua solução aqui:
 
+const DiscountProduct = function (name, basePrice, discountPercent) {
+  let privateName;
+  let privateBasePrice;
+  let privateDiscountPercent;
+
+  if (name !== "" && typeof name === "string") {
+    privateName = name;
+  } else {
+    throw new Error("Valor incorreto!");
+  }
+
+    if (typeof basePrice === "number" && basePrice > 0) {
+        privateBasePrice = basePrice;
+    } else {
+        throw new Error("Valor incorreto!");
+    }
+
+    if (discountPercent <= 100 && discountPercent >= 0) {
+        privateDiscountPercent = discountPercent;
+    } else {
+        throw new Error("Valor incorreto!");
+    }
+
+  Object.defineProperties(this, {
+    name: {
+      enumerable: true,
+      configurable: true,
+      get: () => {
+        return privateName;
+      },
+      set: (value) => {
+        if (value !== "" && typeof value === "string") {
+          privateName = value;
+        } else {
+          throw new Error("Valor incorreto!");
+        }
+      },
+    },
+    basePrice: {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        return privateBasePrice;
+      },
+      set: (value) => {
+        if (typeof value === "number" && value > 0) {
+          privateBasePrice = value;
+        } else {
+          throw new Error("Valor incorreto!");
+        }
+      },
+    },
+    discountPercent: {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        return privateDiscountPercent;
+      },
+      set: (value) => {
+        if (value <= 100 && value >= 0) {
+          privateDiscountPercent = value;
+        } else {
+          throw new Error("Valor incorreto!");
+        }
+      },
+    },
+    finalPrice: {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        return (
+          privateBasePrice - privateBasePrice * (privateDiscountPercent / 100)
+        );
+      },
+    },
+    savings: {
+      enumerable: true,
+      configurable: false,
+      get: () => {
+        return `Você está economizando R$${privateBasePrice * (privateDiscountPercent / 100)}`;
+      },
+    },
+  });
+};
 
 // Teste seu código:
-// const product = new DiscountProduct('Teclado Mecânico', 500, 20)
-// console.log(product.finalPrice) // 400
-// console.log(product.savings) // 100
-// product.discountPercent = 30
-// console.log(product.finalPrice) // 350
-
+const product = new DiscountProduct("Teclado Mecânico", 500, 20);
+console.log(product.finalPrice); // 400
+console.log(product.savings) // 100
+product.discountPercent = 30
+console.log(product.finalPrice) // 350
 
 // ============================================================
 // EXERCÍCIO 6: Sistema de Cache
@@ -258,7 +424,7 @@ function createAppConfig(theme, language, fontSize) {
 
 // Sua solução aqui:
 function createCache() {
-    // Implemente aqui
+  // Implemente aqui
 }
 
 // Teste seu código:
@@ -266,7 +432,6 @@ function createCache() {
 // cache.set('user', { name: 'João' }, 5000) // expira em 5 segundos
 // console.log(cache.get('user'))
 // console.log(cache.size)
-
 
 // ============================================================
 // EXERCÍCIO 7: Validador de Formulário
@@ -283,7 +448,6 @@ function createCache() {
 
 // Sua solução aqui:
 
-
 // Teste seu código:
 // const form = new FormValidator()
 // form.addField('email', [
@@ -292,7 +456,6 @@ function createCache() {
 // ])
 // form.setValue('email', 'teste@email.com')
 // console.log(form.isValid)
-
 
 // ============================================================
 // EXERCÍCIO 8: Gerenciador de Tarefas (TODO)
@@ -311,7 +474,6 @@ function createCache() {
 
 // Sua solução aqui:
 
-
 // Teste seu código:
 // const tasks = createTaskManager()
 // tasks.addTask('Estudar JavaScript', 'high')
@@ -320,17 +482,16 @@ function createCache() {
 // tasks.toggleTask(1)
 // console.log(tasks.completedTasks.length)
 
-
 // ============================================================
 // DESAFIO FINAL: Sistema de Pedidos de Restaurante
 // ============================================================
 /**
  * Crie um sistema completo de pedidos que:
- * 
+ *
  * 1. Construtor MenuItem:
  *    - name, price, category, available (boolean)
  *    - Todas com validações apropriadas
- * 
+ *
  * 2. Factory function createOrder:
  *    - orderNumber (gerado automaticamente)
  *    - items (array privado de { menuItem, quantity })
@@ -340,7 +501,7 @@ function createCache() {
  *    - Getter 'tax' (10% do subtotal)
  *    - Getter 'total' (subtotal + tax)
  *    - Método updateStatus(newStatus) com validação
- * 
+ *
  * 3. Factory function createRestaurant:
  *    - Gerencie um menu de items
  *    - Gerencie uma lista de pedidos
@@ -351,9 +512,6 @@ function createCache() {
  */
 
 // Sua solução aqui:
-
-
-
 
 // ============================================================
 // BOA SORTE! 🚀
