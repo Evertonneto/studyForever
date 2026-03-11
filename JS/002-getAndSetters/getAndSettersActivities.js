@@ -424,14 +424,54 @@ console.log(product.finalPrice) // 350
 
 // Sua solução aqui:
 function createCache() {
-  // Implemente aqui
+  let privateCache = {
+    
+  }
+  return {
+    get (key){
+      if(!privateCache[key]){
+        return null
+      }
+
+      if(Date.now() > privateCache[key].expiresAt){
+        delete privateCache[key];
+        return null
+      }
+
+      return privateCache[key].value.name
+    },
+    set (key,value,ttl){
+      privateCache[key] = {
+          value:value,
+          expiresAt: Date.now() + ttl
+      }
+    },
+    get size(){
+      let count = 0
+      for(let key in privateCache){
+        if(privateCache[key].expiresAt >= Date.now()){
+          count++
+        }
+      }
+      return count
+    },
+    clear(){
+       for(let key in privateCache){
+        delete privateCache[key]
+      }
+    }
+    
+  }
 }
 
 // Teste seu código:
-// const cache = createCache()
-// cache.set('user', { name: 'João' }, 5000) // expira em 5 segundos
-// console.log(cache.get('user'))
-// console.log(cache.size)
+const cache = createCache()
+cache.set('user1', { name: 'João' }, 25000) // expira em 5 segundos
+cache.set('user2', { name: 'Ton' }, 1000) // expira em 1 segundos
+setTimeout(()=>{
+  console.log(cache.get('user1'))
+  console.log(cache.size)
+},995)
 
 // ============================================================
 // EXERCÍCIO 7: Validador de Formulário
