@@ -182,8 +182,41 @@ console.log(Candidatos)
 // - Exibe o status da operação
 
 console.log("===== EXERCÍCIO 8 =====");
-// TODO: Implemente aqui
+const clientesInativos = new Map([
+    ['Everton',{idade:23,status:'inativo'}],
+    ['José',{idade:21,status:'inativo'}],
+    ['João',{idade:24,status:'inativo'}],
+    ['movimentarParaClientesAtivos',(nome)=>{
+        if(clientesInativos.has(nome)){
+            let {cliente} = clientesInativos.get(nome)
+            clientesAtivos.set(nome,{...cliente,status:'Ativo'})
+            clientesInativos.delete(nome)
+            console.log(clientesAtivos.get(nome))
+        }else{
+            console.log('Cliente não encontrado na lista.')
+        }
+    }]
+])
+const clientesAtivos = new Map([
+    ['Paulo',{idade:23,status:'Ativo'}],
+    ['Leo',{idade:21,status:'Ativo'}],
+    ['Guilherme',{idade:24,status:'Ativo'}],
+    ['movimentarParaClientesInativos',(nome)=>{
+         if(clientesAtivos.has(nome)){
+            let {cliente} = clientesAtivos.get(nome)
+            clientesInativos.set(nome,{...cliente,status:'Inativo'})
+            clientesAtivos.delete(nome)
+            console.log(clientesInativos.get(nome))
+        }else{
+            console.log('Cliente não encontrado na lista.')
+        }
+    }]
+])
 
+clientesInativos.get('movimentarParaClientesAtivos')('Everton')
+console.log(clientesAtivos)
+clientesAtivos.get('movimentarParaClientesInativos')('Everton')
+console.log(clientesInativos)
 
 // ========== EXERCÍCIO 9 ==========
 // Use um Map para armazenar configurações de um aplicativo
@@ -196,9 +229,48 @@ console.log("===== EXERCÍCIO 8 =====");
 // - listarConfiguracoes()
 
 console.log("===== EXERCÍCIO 9 =====");
-// TODO: Implemente aqui
-
-
+const settings = new Map([
+    ['setConfig',(chave,valor)=>{
+        if(typeof chave === 'string' && (typeof valor === 'string' || typeof valor === 'number' || typeof valor === 'boolean' )){
+            settings.set(chave.toLowerCase(),valor)
+        }else{
+            console.log('Chave ou valor não aceito.')
+        }
+    }],
+    ['getConfig',(chave,padrao)=>{
+        for(let setting of settings){
+            if(typeof setting[1] !== 'function' && setting[0] === chave){
+                return settings.get(setting[0])
+            }
+        }
+        return padrao
+    }],
+    ['resetConfig',()=>{
+        let settingsToRemove=[];
+        for(let setting of settings){
+            if(typeof setting[1] !== 'function'){
+                settingsToRemove.push(setting[0])
+            }
+        }
+        for(let setting of settingsToRemove){
+            settings.delete(setting)
+        }
+    }],
+    ['listarConfiguracoes',()=>{
+        for(let setting of settings){
+            if(typeof setting[1] !== 'function')
+                console.log(setting[0]+': '+setting[1])
+        }
+    }],
+])
+settings.get('setConfig')('CPU','I5 10ªGENARATION')
+settings.get('setConfig')('RAM','8GB RAM')
+settings.get('setConfig')('SSD','480GB')
+settings.get('setConfig')('GPU','RTX 550 128BITS 8GB')
+console.log(settings.get('getConfig')('cpu'))
+settings.get('resetConfig')()
+settings.get('listarConfiguracoes')()
+console.log(settings)
 // ========== EXERCÍCIO 10 ==========
 // Desafio: Crie um cache usando Map com expiração
 // - Adicione itens com chave e valor
