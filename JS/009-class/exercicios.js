@@ -95,6 +95,54 @@ console.log(alunoJ)
 	 - `set password(value)` valida que `value` é `string` com >= 6 caracteres e atualiza;
 	 - Tentativas inválidas não alteram a senha e não lançam exceção (podem logar mensagem).
 */
+const _password = Symbol('Password')
+class Usuario1{
+	constructor(email){
+		this.email = email
+		this[_password] = 'senhapadrao123'
+	}
+
+	get password(){
+		return this[_password]
+	}
+
+	set password(value){
+		if(typeof value === 'string' && value.length >= 6){
+			this[_password] = value
+			return
+		}
+		console.log('Senha não aceita. Por favor digite uma senha de pelo menos 6 digitos!')
+	}
+}
+
+let user1 = new Usuario1('jose@gmail.com')
+user1.password = 'Tony123'
+console.log(user1.password)
+
+class Usuario2{
+	#password;
+
+	constructor(email){
+		this.email = email
+		this.#password = 'senhapadrao123'
+	}
+
+	get password(){
+		return this.#password
+	}
+
+	set password(value){
+		if(typeof value === 'string' && value.length >= 6){
+			this.#password = value
+			return
+		}
+		console.log('Senha não aceita. Por favor digite uma senha de pelo menos 6 digitos!')
+	}
+}
+
+let user2 = new Usuario2('ton@gmail.com')
+user2.password = 'ddd123'
+console.log(user2.password)
 
 /* === Questão 4: Métodos estáticos e contador ===
  - Crie a classe Conta com titular e saldo.
@@ -107,6 +155,64 @@ console.log(alunoJ)
 	 - `depositar(valor)` e `sacar(valor)` funcionam corretamente (saldo ajustado);
 	 - `Conta.transferir(origem, destino, valor)` realiza a transferência somente se `origem.saldo >= valor` e retorna booleano indicando sucesso/fracasso.
 */
+
+class Conta{
+	static contador = 0;
+
+	constructor(titular,saldo){
+		if(typeof titular ==='string' && typeof saldo === 'number' && saldo >= 0){
+			this.titular = titular;
+			this.saldo = saldo;
+			Conta.contador += 1
+		}else{
+			console.log('Erro ao criar a conta!')
+		}
+
+	}
+
+	depositar(value){
+		if(typeof value === 'number' && value > 0){
+			this.saldo += value
+			return true
+		}
+		console.log('Erro ao depositar.')
+		return false
+	}
+
+	sacar(value){
+		if(value <= this.saldo && value > 0){
+			this.saldo -= value
+			console.log(`Saque de ${value} efetuado, saldo atual: ${this.saldo}`)
+			return true
+		}
+		console.log('Erro ao sacar!')
+		return false
+	}
+
+	static transferir(origem,destino,valor){
+		if(origem && destino && typeof valor === 'number' && valor > 0){
+				if(origem.saldo >= valor){
+					if(origem.sacar(valor) === true && destino.depositar(valor) ===true){
+						return true
+					}
+				}else{
+					return false
+				}
+
+
+			}
+		return false
+
+	}
+}
+
+let contaTon = new Conta('Ton',200)
+let contaJoao = new Conta('Joao',0)
+Conta.transferir(contaTon,contaJoao,200)
+console.log(contaJoao)
+console.log(contaTon)
+console.log(Conta.contador)
+
 
 /* === Questão 5: Polimorfismo - Veículos ===
  - Crie Veiculo com marca e velocidadeMax e método info().
