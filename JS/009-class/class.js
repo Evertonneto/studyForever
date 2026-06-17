@@ -35,3 +35,25 @@ class User{
 let user1 = new User('Ton')
 user1.password = '123456'
 console.log(user1.password)
+
+class Computer{
+    constructor(cpu,ram,ssd){
+        this.cpu = cpu;
+        this.ram = ram;
+        this.ssd = ssd;
+    }
+
+    configs(){
+        console.log(`CPU - ${this.cpu} | RAM - ${this.ram} | SSD - ${this.ssd}`)
+    }
+
+    static downloadNewDriver(){
+        console.log('Installing new driver...')
+        console.log('Driver Downloaded.')
+    }
+
+    
+}
+let standardCPU = new Computer('I3 10ªGeneration','8GB RAM', '420GB')
+console.log(standardCPU)
+Computer.downloadNewDriver()

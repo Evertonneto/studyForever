@@ -190,7 +190,7 @@ class Conta{
 	}
 
 	static transferir(origem,destino,valor){
-		if(origem && destino && typeof valor === 'number' && valor > 0){
+		if(origem instanceof Conta && destino instanceof Conta && typeof valor === 'number' && valor > 0){
 				if(origem.saldo >= valor){
 					if(origem.sacar(valor) === true && destino.depositar(valor) ===true){
 						return true
@@ -223,6 +223,47 @@ console.log(Conta.contador)
 	 - `Carro` e `Moto` estendem `Veiculo` e sobrescrevem `info()` incluindo propriedades extras (ex: `portas`, `temCarenagem`);
 	 - Chamadas a `info()` nas subclasses retornam strings que combinam `super.info()` com detalhes da subclasse.
 */
+
+class Veiculo{
+	constructor(marca,velocidadeMax){
+		this.marca = marca;
+		this.velocidadeMax = velocidadeMax;
+	}
+
+	info(){
+		return `Marca:${this.marca} | Velocidade: ${this.velocidadeMax}`
+	}
+}
+
+class Carro extends Veiculo{
+	constructor(marca,velocidadeMax,portas,turbo){
+		super(marca,velocidadeMax)
+		this.portas = portas;
+		this.turbo = turbo ;
+	}
+
+	info(){
+		return `${super.info()} | Portas: ${this.portas} | Turbo: ${this.turbo}`
+	}
+}
+
+let car1 = new Carro('Volkswagen',120,5,true)
+console.log(car1)
+console.log(car1.info())
+
+class Moto extends Veiculo{
+	constructor(marca,velocidadeMax,temCarenagem){
+		super(marca,velocidadeMax)
+		this.temCarenagem = temCaneragem;
+	}
+
+	info(){
+		return `${super.info()} | Tem caneragem: ${this.temCarenagem}`
+	}
+}
+
+let moto1 = new Moto('Honda',110,true)
+console.log(moto1.info())
 
 /* === Questão 6: Desafio extra (opcional) ===
  - Implemente Repositorio que guarda objetos em memória e oferece salvar(obj) e buscarTodos().
