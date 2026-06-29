@@ -254,7 +254,7 @@ console.log(car1.info())
 class Moto extends Veiculo{
 	constructor(marca,velocidadeMax,temCarenagem){
 		super(marca,velocidadeMax)
-		this.temCarenagem = temCaneragem;
+		this.temCarenagem = temCarenagem;
 	}
 
 	info(){
@@ -273,6 +273,29 @@ console.log(moto1.info())
 	 - `salvar(obj)` adiciona o objeto ao repositório;
 	 - `buscarTodos()` retorna uma cópia/array com todos os objetos salvos.
 */
+
+class Repositorio{
+	constructor(){
+		this.armazenamento = []
+	}
+
+	salvar(obj){
+		if(!(typeof obj == 'object')) return false
+		this.armazenamento.push(obj)
+	}
+
+	buscarTodos(){
+		let copia = [...this.armazenamento]
+		return copia
+	}
+}
+
+let repo1 = new Repositorio()
+repo1.salvar({nome:'Ton',idade:24,altura:176})
+repo1.salvar({nome:'Ton',idade:24,altura:176})
+repo1.salvar({nome:'Ton',idade:24,altura:176})
+console.log(repo1)
+console.log(repo1.buscarTodos())
 
 /* === Questão 7: Exercício prático - Biblioteca ===
  - Crie classes Livro (titulo, autor, isbn) e Biblioteca que mantém uma lista de livros.
