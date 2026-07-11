@@ -35,10 +35,19 @@ form{
 
 form label,button{
     font-size: 1.5rem;
+    margin-top: 1rem;
 }
 
 form input{
-    margin-bottom: 1rem;
+    
     font-size: 1.5rem;
+
+}
+
+.error-text{
+    color: red;
+    margin: 0.2rem;
+    padding: 0.2rem;
+   
 
 }
