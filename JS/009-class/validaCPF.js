@@ -33,6 +33,8 @@ class Pessoa{
             return ac
         },0)
 
+        console.log(total)
+
         let digito = 11 - (total % 11)
         return digito >= 9 ? 0 : digito
 

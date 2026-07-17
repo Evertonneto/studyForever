@@ -46,6 +46,7 @@ form input{
 
 .error-text{
     color: red;
+    font-size: large;
     margin: 0.2rem;
     padding: 0.2rem;
    
