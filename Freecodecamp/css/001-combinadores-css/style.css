@@ -1,0 +1,24 @@
+/* aplica nos filhos de .box que são p */
+.box p{
+    color: aqua;
+}
+
+/* aplica nos filhos diretos de div que são p */
+.container > p{
+    color: red;
+}
+
+/* aplica nos filhos diretos de div que são p */
+div > p{
+    color: blue;
+}
+
+/* Aplica no próximo irmão de h6 que é p */
+h6 + p{
+    color: violet;
+}
+
+/* Aplica em todos os irmãos de h6 que são p */
+h6 ~ p{
+    color: green;
+}
